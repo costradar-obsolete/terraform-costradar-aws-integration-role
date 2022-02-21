@@ -1,7 +1,10 @@
 resource "aws_iam_role" "integration" {
-  name               = var.role_name
-  name_prefix        = var.role_name_prefix
-  assume_role_policy = data.aws_iam_policy_document.assume_role.json
+  name                 = var.role_name
+  name_prefix          = var.role_name_prefix
+  assume_role_policy   = data.aws_iam_policy_document.assume_role.json
+  path                 = var.path
+  tags                 = var.tags
+  permissions_boundary = var.permissions_boundary_arn
 }
 
 data "aws_iam_policy_document" "assume_role" {
@@ -82,7 +85,7 @@ data "aws_iam_policy_document" "default_permissions" {
   }
 
   statement {
-    sid = "CloudWatchMetricsAccess"
+    sid = "CloudWatchAccessReadonly"
     actions = [
       "cloudwatch:Get*",
       "cloudwatch:List*"
@@ -91,7 +94,7 @@ data "aws_iam_policy_document" "default_permissions" {
   }
 
   statement {
-    sid = "ConfigAccess"
+    sid = "ConfigAccessReadOnly"
     actions = [
       "config:Get*",
       "config:BatchGet*",

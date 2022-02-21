@@ -36,8 +36,11 @@ No modules.
 | <a name="input_costradar_role_arn"></a> [costradar\_role\_arn](#input\_costradar\_role\_arn) | ARN of the costradar role that will assume the integration role. | `string` | n/a | yes |
 | <a name="input_cur"></a> [cur](#input\_cur) | n/a | <pre>object({<br>    bucket = string<br>  })</pre> | `null` | no |
 | <a name="input_external_id"></a> [external\_id](#input\_external\_id) | External ID for assuming the role. If will be added to assume policy and must be provided to costradar. | `string` | n/a | yes |
+| <a name="input_path"></a> [path](#input\_path) | n/a | `string` | `null` | no |
+| <a name="input_permissions_boundary_arn"></a> [permissions\_boundary\_arn](#input\_permissions\_boundary\_arn) | n/a | `string` | `null` | no |
 | <a name="input_role_name"></a> [role\_name](#input\_role\_name) | Name of the role that will be crated. Either role\_name or role\_prefix should be provided. | `string` | `null` | no |
 | <a name="input_role_name_prefix"></a> [role\_name\_prefix](#input\_role\_name\_prefix) | Prefix of the role that will be crated. Either role\_prefix or role\_name should be provided. | `string` | `null` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | n/a | `map(string)` | `{}` | no |
 
 ## Outputs
 

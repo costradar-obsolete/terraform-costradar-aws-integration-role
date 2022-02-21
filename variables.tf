@@ -33,3 +33,18 @@ variable "cloudtrail" {
   })
   default = null
 }
+
+variable "permissions_boundary_arn" {
+  type    = string
+  default = null
+}
+
+variable "tags" {
+  type    = map(string)
+  default = {}
+}
+
+variable "path" {
+  type    = string
+  default = null
+}

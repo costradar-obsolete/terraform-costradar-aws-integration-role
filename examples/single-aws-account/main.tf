@@ -21,5 +21,5 @@ data "costradar_integration_config" "current" {}
 
 module "costradar_integration_role" {
   source  = "costradar/aws-integration-role/costradar"
-  version = "0.1.1"
+  version = "0.1.2"
 }
