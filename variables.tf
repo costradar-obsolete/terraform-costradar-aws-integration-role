@@ -20,19 +20,11 @@ variable "role_name_prefix" {
   default     = null
 }
 
-variable "cur" {
-  type = object({
-    bucket = string
-  })
-  default = null
+variable "buckets" {
+  type    = list(string)
+  default = []
 }
 
-variable "cloudtrail" {
-  type = object({
-    bucket = string
-  })
-  default = null
-}
 
 variable "permissions_boundary_arn" {
   type    = string

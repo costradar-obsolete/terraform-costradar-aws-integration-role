@@ -28,44 +28,23 @@ resource "aws_iam_role_policy" "default" {
   policy = data.aws_iam_policy_document.default_permissions.json
 }
 
-resource "aws_iam_role_policy" "cur_s3" {
-  count  = var.cur == null ? 0 : 1
+resource "aws_iam_role_policy" "s3_permissions" {
+  count  = length(var.buckets) == 0 ? 0 : 1
   name   = "cur-s3"
   role   = aws_iam_role.integration.id
-  policy = data.aws_iam_policy_document.cur_s3_permissions[0].json
+  policy = data.aws_iam_policy_document.s3_permissions[0].json
 }
 
-resource "aws_iam_role_policy" "cloudtrail_s3" {
-  count  = var.cloudtrail == null ? 0 : 1
-  name   = "cloudtrail-s3"
-  role   = aws_iam_role.integration.id
-  policy = data.aws_iam_policy_document.cloudtrail_s3_permissions[0].json
-}
-
-data "aws_iam_policy_document" "cur_s3_permissions" {
-  count = var.cur == null ? 0 : 1
+data "aws_iam_policy_document" "s3_permissions" {
+  count = length(var.buckets) == 0 ? 0 : 1
   statement {
     sid     = "S3LogsAndReportsReadOnly"
     actions = ["s3:List*", "s3:Get*"]
-    resources = [
-      "arn:aws:s3:::${var.cur.bucket}",
-      "arn:aws:s3:::${var.cur.bucket}/*",
-    ]
+    resources = flatten([
+      for bucket in var.buckets : ["arn:aws:s3:::${bucket}", "arn:aws:s3:::${bucket}/*"]
+    ])
   }
 }
-
-data "aws_iam_policy_document" "cloudtrail_s3_permissions" {
-  count = var.cloudtrail == null ? 0 : 1
-  statement {
-    sid     = "S3LogsAndReportsReadOnly"
-    actions = ["s3:List*", "s3:Get*"]
-    resources = [
-      "arn:aws:s3:::${var.cloudtrail.bucket}",
-      "arn:aws:s3:::${var.cloudtrail.bucket}/*",
-    ]
-  }
-}
-
 
 data "aws_iam_policy_document" "default_permissions" {
   statement {
@@ -104,5 +83,4 @@ data "aws_iam_policy_document" "default_permissions" {
     ]
     resources = ["*"]
   }
-
 }
